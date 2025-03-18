@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:medication/screens/moodCompanion.dart';
+import 'package:medication/screens/speech_analysis_page.dart';
 
 import 'routineTracker.dart';
 
@@ -56,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
               Column(
                 children: [
                   Text("Welcome!",style: TextStyle(fontSize: 24,fontWeight:FontWeight.w600 ),),
-                  Text("MindCare",style: TextStyle(fontSize: 16,fontWeight:FontWeight.w600,color: Colors.blueAccent ),),
+                  Text("MindCare",style: TextStyle(fontSize: 16,fontWeight:FontWeight.w600,color: Color.fromRGBO(0, 126, 154, 1), ),),
                 ],
               ),
               SizedBox(height: 100,),
@@ -71,8 +73,6 @@ class _MainScreenState extends State<MainScreen> {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          if(canVibrate){
-                          }
                           Get.to(Routinetracker());
                         },
                         child: Column(
@@ -97,7 +97,7 @@ class _MainScreenState extends State<MainScreen> {
                         onTap: (){
                           if(canVibrate){
                           }
-                          // Get.to(CurrencyDetectorScreen());
+                          //Get.to(Routinetracker());
                         },
                         child: Column(
                           children: [
@@ -121,7 +121,7 @@ class _MainScreenState extends State<MainScreen> {
                         onTap: (){
                           if(canVibrate){
                           }
-                          // Get.to(CurrencyDetectorScreen());
+                           Get.to(SpeechAnalysisPage());
                         },
                         child: Column(
                           children: [
@@ -143,7 +143,7 @@ class _MainScreenState extends State<MainScreen> {
 
                       GestureDetector(
                         onTap: (){
-                          // Get.to(CurrencyDetectorScreen());
+                          Get.to(Moodcompanion());
                         },
                         child: Column(
                           children: [

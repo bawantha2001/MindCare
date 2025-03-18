@@ -1,0 +1,6 @@
+0 Namenda
+1 Cognex
+2 Donepezil Hydrochloride
+3 Galantamine Razadyne
+4 Namzaric
+5 Rivastigmine Exelon

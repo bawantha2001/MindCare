@@ -25,8 +25,7 @@ class _CurrencyDetectorScreen extends State<Routinetracker> {
  @override
  void dispoce(){
    super.dispose();
-   scanService.cameraController.dispose();
-   Tflite.close();
+
  }
 
   Future<void> _initializeTTS() async {
@@ -42,77 +41,94 @@ class _CurrencyDetectorScreen extends State<Routinetracker> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async{
-        speak("back to main menu");
-        return true;
-      },
-      child: Scaffold(
-        body:GetBuilder<ScanService>(
-          init: ScanService(),
-          builder: (controller) {
-            if (controller.detectedObject.value.isNotEmpty) {
-              if (controller.detectedObject.value != controller.lastSpokenObject) {
-                controller.lastSpokenObject = controller.detectedObject.value;
-                speak("Detected ${controller.detectedObject.value}");
-              }
-            }
+    return Scaffold(
+      appBar: AppBar(
+        leading: GestureDetector(onTap:() {
+          Navigator.pop(context);
+          },
+            child: Icon(Icons.arrow_back_ios_rounded,color: Colors.blue,)
+        ),
+      ),
 
-            return Stack(
-              children: [
-                controller.isCameraInitialized.value?Container(height: double.infinity,child: CameraPreview(controller.cameraController))
-                    :Container(
-                  height: double.infinity,
-                  width: double.infinity,
+      body:GetBuilder<ScanService>(
+        init: ScanService(),
+        builder: (controller) {
+          return Stack(
+            children: [
+              controller.isCameraInitialized.value?
+              Container(
+                  padding:EdgeInsets.symmetric(horizontal: 10),
+                  height: 504,
+                  child: CameraPreview(controller.cameraController)
+              )
+                  :
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  height: 504,
                   decoration: BoxDecoration(
-                    color: Colors.black
+                    color: Color.fromRGBO(0, 126, 154, 0.5)
                   ),
                     ),
-                SafeArea(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Container(
-                        padding: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(width: 1,color: Colors.green),
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-
-                        width: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(child: scanService.detectedObject.value.isNotEmpty?Text("💵: ${controller.detectedObject.value}",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 18),)
-                                :Text("⚠️: Not Detected",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 18),)),
-                          ],
-                        ),
-                      ),
+              ),
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(controller.isCameraInitialized.value?"SCANNING...":"",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 15),),
+                      ],
                     ),
                   ),
                 ),
-                scanService.detectedObject.value.isEmpty?
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SpinKitWave(
-                        color: Colors.green,
-                        size: 35,
-                      ),
-                      SizedBox(height: 5,),
-                      Text("📡 Scanning For Currencies",style:  TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 20),)
-                    ],
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    SizedBox(height: 100,),
+                    controller.isCameraInitialized.value?Container(
+                        width: 300,
+                        decoration:BoxDecoration(
+                      border: Border.all(width: 2,color: Colors.grey.withOpacity(0.6)),
+                          borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Image.asset("assets/images/scanner.gif",)):SizedBox(),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                  child: SizedBox(
+                    width: 237,
+                    height: 45,
+                    child: ElevatedButton(onPressed: (){
+                      print(scanService.isCameraInitialized);
+                      if(scanService.isCameraInitialized()!= true){
+                        scanService.initCamera(context);
+                        scanService.initTFLite();
+                      }else{
+                        scanService.stopCamera();
+                      }
+                    },
+                        child: Text(!controller.isCameraInitialized()?"Scan Medication":"Stop Medication"),
+                      style:ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromRGBO(0, 126, 154, 1),
+                        foregroundColor: Colors.white
+                      )
+                    ),
                   ),
-                ):SizedBox()
-              ],
-            );
-          }
-        )
-      ),
+                ),
+              )
+            ],
+          );
+        }
+      )
     );
   }
 }
