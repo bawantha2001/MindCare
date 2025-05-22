@@ -138,7 +138,7 @@ class ScanService extends GetxController{
       if(detector != null){
         if(detector[0]['confidence']>=0.89 && detector[0]['confidence']<0.9999064207077026){
           String label = detector[0]['label'];
-          detectedObject.value = label.replaceAll(RegExp(r'[0-9]'), '');
+          detectedObject.value = label.replaceAll(RegExp(r'[0-9\s]'), '');
           update();
           print("Result is $label");
           stopCamera();

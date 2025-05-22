@@ -40,7 +40,7 @@ class _MusicScreenState extends State<MusicScreen> {
                   ),
                   child: Row(
                     children: [
-                      Text(widget.faceType=='Happy'?"Clarence Wijewardena - Malata Bambareku Se":widget.faceType=='Sad'?"Karunaratne Divulgane - Sulanga Numba Wage":"Sunil Perera - Kurumitto",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),),
+                      Flexible(child: Text(widget.faceType=='Happy'?"Clarence Wijewardena - Malata Bambareku Se":widget.faceType=='Sad'?"Karunaratne Divulgane - Sulanga Numba Wage":"Sunil Perera - Kurumitto",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),)),
                       Spacer(),
                       GestureDetector(
                         onTap: (){

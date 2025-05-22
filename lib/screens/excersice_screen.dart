@@ -42,7 +42,7 @@ class _ExcersiceScreenState extends State<ExcersiceScreen> {
                   ),
                   child: Row(
                     children: [
-                      Text(widget.faceType=='Happy'?"Chair Dancing":widget.faceType=='Sad'?"Slow Walking":"Squeezing a Soft Stress Ball",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),),
+                      Expanded(child: Text(widget.faceType=='Happy'?"Chair Dancing":widget.faceType=='Sad'?"Slow Walking":"Squeezing a Soft Stress Ball",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),)),
                       Spacer(),
                       ElevatedButton(
                         onPressed: (){
@@ -67,7 +67,7 @@ class _ExcersiceScreenState extends State<ExcersiceScreen> {
                   ),
                   child: Row(
                     children: [
-                      Text(widget.faceType=='Happy'?"Tai Chi":widget.faceType=='Sad'?"Slow Walking":"Seated Leg & Arm Movements",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),),
+                      Expanded(child: Text(widget.faceType=='Happy'?"Tai Chi":widget.faceType=='Sad'?"Slow Walking":"Seated Leg & Arm Movements",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),)),
                       Spacer(),
                       ElevatedButton(
                         onPressed: (){

@@ -54,7 +54,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
                         ),
                         child: Row(
                           children: [
-                            Text(widget.faceType=='Happy'?"Seated Chair Yoga Sun Salutations":widget.faceType=='Sad'?"Alternate Nostril Breathing":"Bhastrika Pranayama",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),),
+                            Flexible(child: Text(widget.faceType=='Happy'?"Seated Chair Yoga Sun Salutations":widget.faceType=='Sad'?"Alternate Nostril Breathing":"Bhastrika Pranayama",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),)),
                             Spacer(),
                             ElevatedButton(
                               onPressed: (){
@@ -79,7 +79,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
                         ),
                         child: Row(
                           children: [
-                            Text(widget.faceType=='Happy'?"Chair Warrior II":widget.faceType=='Sad'?"Standing Chair Yoga Sun Salutations":"Chair Yoga Down Dog",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),),
+                            Flexible(child: Text(widget.faceType=='Happy'?"Chair Warrior II":widget.faceType=='Sad'?"Standing Chair Yoga Sun Salutations":"Chair Yoga Down Dog",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),)),
                             Spacer(),
                             ElevatedButton(
                               onPressed: (){
@@ -116,7 +116,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
                         ),
                         child: Row(
                           children: [
-                            Text(widget.faceType=='Happy'?"Gratitude Reflection Meditation":widget.faceType=='Sad'?"Deep Breathing with Affirmations":"Cooling Breath",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),),
+                            Flexible(child: Text(widget.faceType=='Happy'?"Gratitude Reflection Meditation":widget.faceType=='Sad'?"Deep Breathing with Affirmations":"Cooling Breath",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),)),
                             Spacer(),
                             ElevatedButton(
                               onPressed: (){
@@ -141,7 +141,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
                         ),
                         child: Row(
                           children: [
-                            Text(widget.faceType=='Happy'?"Joyful Visualization":widget.faceType=='Sad'?"Body Relaxation Meditation":"Guided Relaxation",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),),
+                            Flexible(child: Text(widget.faceType=='Happy'?"Joyful Visualization":widget.faceType=='Sad'?"Body Relaxation Meditation":"Guided Relaxation",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18),)),
                             Spacer(),
                             ElevatedButton(
                               onPressed: (){
