@@ -15,7 +15,7 @@ class ResultModel{
 
   Map<String, dynamic> toJson() => {
     'dateTime': dateTime!.toIso8601String(),
-    'title': result,
+    'result': result,
   };
 
 
