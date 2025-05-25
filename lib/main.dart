@@ -1,13 +1,16 @@
+import 'package:alarm/alarm.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medication/provider/auth_provider.dart';
-import 'package:medication/screens/welcome_screen/welcome_screen.dart';
+import 'package:medication/provider/remind_provider.dart';
+import 'package:medication/screens/wrapper_screen/wrapper_screen.dart';
 import 'package:provider/provider.dart';
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Alarm.init();
   await Firebase.initializeApp(
     options: FirebaseOptions(
         apiKey: "AIzaSyDoZrO3W42wTDckMLt_bJkbIT1hz-uZmac",
@@ -17,7 +20,8 @@ Future<void> main() async {
   );
   runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => UserAuthProvider(),)
+        ChangeNotifierProvider(create: (context) => UserAuthProvider(),),
+        ChangeNotifierProvider(create: (context) => RemindProvider(),)
       ],
   child: const MyApp()));
 }
@@ -35,7 +39,7 @@ class MyApp extends StatelessWidget {
 
         useMaterial3: true,
       ),
-      home: WelcomeScreen(),
+      home: WrapperScreen(),
     );
   }
 }

@@ -16,8 +16,7 @@ class ResultPage extends StatelessWidget {
     for (var response in responses) {
       String predictedLabel = response['predictedLabel'] ?? "";
       String category;
-      if (predictedLabel == "Patient's Confused Respond" ||
-          predictedLabel == "Patient's Minimum respond") {
+      if (predictedLabel == "Patient's Confused Respond" || predictedLabel == "Patient's Minimum respond") {
         category = "severe";
       } else if (predictedLabel == "Patient's Delay Respond") {
         category = "moderate";

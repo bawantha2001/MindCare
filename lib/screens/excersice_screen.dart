@@ -16,6 +16,7 @@ class _ExcersiceScreenState extends State<ExcersiceScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(242, 242, 246, 1),
         title: Text("All Exercisices"),
         leading: GestureDetector(onTap:() {
           Navigator.pop(context);
@@ -27,7 +28,7 @@ class _ExcersiceScreenState extends State<ExcersiceScreen> {
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Colors.white
+              color: Color.fromRGBO(242, 242, 246, 1),
           ),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
