@@ -7,7 +7,8 @@ import 'package:medication/provider/auth_provider.dart';
 import 'package:medication/screens/chat_Screen/chat_screen.dart';
 import 'package:medication/screens/moodCompanion.dart';
 import 'package:medication/screens/rooting_dashboard_screen/rooting_dasshboard_screen.dart';
-import 'package:medication/screens/speech_analysis_page.dart';
+import 'package:medication/screens/speech_analysis_screen/speech_analysis_page.dart';
+import 'package:medication/screens/speech_analysis_screen/start_speech_analysis.dart';
 import 'package:medication/screens/welcome_screen/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -165,7 +166,7 @@ class _MainScreenState extends State<MainScreen> {
                             onTap: (){
                               if(canVibrate){
                               }
-                              Get.to(SpeechAnalysisPage());
+                              Get.to(StartSpeechAnalysis());
                             },
                             child: Column(
                               children: [

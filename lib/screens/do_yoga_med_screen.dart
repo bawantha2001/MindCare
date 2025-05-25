@@ -156,8 +156,29 @@ class _DoExcersiceScreenState extends State<DoYogaMedScreen> {
             child: Icon(Icons.arrow_back_ios_rounded,color: Colors.blue,)
         ),
       ),
+      bottomSheet: BottomSheet(
+        onClosing: (){
+
+        },
+        builder: (context) => Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: GestureDetector(
+              onTap: (){
+                showModalBottomSheet(context: context, builder: (context) => Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 400,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage("assets/images/${widget.exName}.png"),fit: BoxFit.fill)
+                  ),
+                ),
+                showDragHandle: true,
+                );
+              },
+              child: createButton(isShowboarder: true, buttonText: "Show Steps",)),
+        ),
+      ),
       body: Container(
-        padding: EdgeInsets.only(left: 15,top: 15,right: 15,bottom: 5),
+        padding: EdgeInsets.only(left: 15,top: 15,right: 15,bottom: 2),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: Color.fromRGBO(242, 242, 246, 1),
@@ -202,6 +223,19 @@ class _DoExcersiceScreenState extends State<DoYogaMedScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget createButton({required bool isShowboarder, required String buttonText, bool? isLoading}){
+    return Container(
+      width: 250,
+      height: 50,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          color: isShowboarder?Color.fromRGBO(64, 124, 226, 1):Colors.transparent,
+          border: Border.all(width: 1,color: Color.fromRGBO(64, 124, 226, 1))
+      ),
+      child: Center(child:(isLoading??false)?CircularProgressIndicator(color: Colors.white,):Text(buttonText??"",style: TextStyle(fontSize: 16,color: isShowboarder?Colors.white:Color.fromRGBO(64, 124, 226, 1),fontWeight: FontWeight.w500),)),
     );
   }
 }
