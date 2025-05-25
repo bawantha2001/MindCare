@@ -24,10 +24,10 @@ class _SpeechAnalysisPageState extends State<SpeechAnalysisPage> {
 
   // Original questions list.
   final List<String> _questions = [
-    "What day is it today?",
-    "What did you have for breakfast?",
+    "What did you do this morning?",
+    "Can you name three things around you?",
     "What is your favorite color?",
-    "Can you name an animal?",
+    "Tell us a favorite childhood memory.",
     "What do you usually do in the morning?",
   ];
 
@@ -144,15 +144,15 @@ class _SpeechAnalysisPageState extends State<SpeechAnalysisPage> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Dialog(
+      builder: (_) => const Dialog(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               CircularProgressIndicator(),
               SizedBox(width: 16),
-              Text("Please wait..."),
+              Text("Please wait…"),
             ],
           ),
         ),
@@ -160,7 +160,6 @@ class _SpeechAnalysisPageState extends State<SpeechAnalysisPage> {
     );
 
     try {
-      // Add the user's recorded audio to the chat.
       setState(() {
         _messages.add({
           'text': "Recorded Audio",
@@ -171,47 +170,39 @@ class _SpeechAnalysisPageState extends State<SpeechAnalysisPage> {
 
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://168.138.69.56:8091/predict'),
+        Uri.parse('http://20.81.156.144:8000/predict'),
       );
-      request.files.add(await http.MultipartFile.fromPath('file', filePath));
+      request.files.add(await http.MultipartFile.fromPath('audio', filePath));
 
-      var response = await request.send();
-      var responseData = await response.stream.bytesToString();
+      var streamed = await request.send();
+      var body = await streamed.stream.bytesToString();
 
-      if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(responseData);
-        String predictedLabel = jsonResponse["predicted_label"] ?? "No label";
-        double confidence = jsonResponse["confidence"] != null
-            ? jsonResponse["confidence"].toDouble()
-            : 0.0;
+      if (streamed.statusCode == 200) {
+        final json = jsonDecode(body) as Map<String, dynamic>;
+        final stage = json['predicted_stage'] as String? ?? 'unknown';
 
-        // Save the response in _serverResponses without showing it.
-        _serverResponses.add({
-          'predictedLabel': predictedLabel,
-          'confidence': confidence,
-        });
+        // Save only the stage
+        _serverResponses.add({'predictedStage': stage});
       } else {
         _serverResponses.add({
-          'error': "Server error: ${response.statusCode}",
+          'error': 'Server error: ${streamed.statusCode}',
         });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text("File is not uploaded. Check your connection or try again."),
+            content: Text("Server error—please try again."),
           ),
         );
       }
     } catch (e) {
-      debugPrint("Error uploading file: $e");
-      _serverResponses.add({
-        'error': "Error: $e",
-      });
+      debugPrint("Upload error: $e");
+      _serverResponses.add({'error': e.toString()});
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("File is not uploaded. Check your connection or try again."),
+          content: Text("Upload failed—check your connection."),
         ),
       );
     } finally {
-      Navigator.of(context).pop(); // Dismiss the loading dialog.
+      Navigator.of(context).pop(); // hide loading
       _askNextQuestion();
     }
   }
