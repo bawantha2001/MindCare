@@ -46,7 +46,7 @@ class _ExcersiceScreenState extends State<ExcersiceScreen> {
                       Spacer(),
                       ElevatedButton(
                         onPressed: (){
-                          Get.to(DoExcersiceScreen(exName: widget.faceType=='Happy'?"Chair Dancing":widget.faceType=='Sad'?"Slow Walking":"Squeezing a Soft Stress Ball"));
+                          Get.to(DoExcersiceScreen(exName: widget.faceType=='Happy'?"Chair Dancing":widget.faceType=='Sad'?"Slow Walking":"Squeezing a Soft Stress Ball",videoUrl: widget.faceType=='Happy'?"https://www.youtube.com/watch?v=j6S8YkqFQb0":widget.faceType=='Sad'?"https://www.youtube.com/watch?v=jgmwEuteZp8":"https://www.youtube.com/watch?v=8h0tSMxLNG4",));
                         },
                         child: Text("Start"),
                         style: ElevatedButton.styleFrom(
@@ -71,7 +71,7 @@ class _ExcersiceScreenState extends State<ExcersiceScreen> {
                       Spacer(),
                       ElevatedButton(
                         onPressed: (){
-                          Get.to(DoExcersiceScreen(exName: widget.faceType=='Happy'?"Tai Chi":widget.faceType=='Sad'?"Slow Walking":"Seated Leg & Arm Movements"));
+                          Get.to(DoExcersiceScreen(exName: widget.faceType=='Happy'?"Tai Chi":widget.faceType=='Sad'?"Slow Walking":"Seated Leg & Arm Movements",videoUrl: widget.faceType=='Happy'?"https://youtube.com/shorts/TgOLQ5QO6k4?si=iw75xfPBb8YEunDx":widget.faceType=='Sad'?"https://www.youtube.com/watch?v=jgmwEuteZp8":"https://www.youtube.com/watch?si=8uaEaYjpvsxqzrzT&v=BkLFyubXaFQ&feature=youtu.be",));
                         },
                         child: Text("Start"),
                         style: ElevatedButton.styleFrom(

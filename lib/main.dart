@@ -1,11 +1,25 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medication/screens/main_screen.dart';
+import 'package:medication/provider/auth_provider.dart';
+import 'package:medication/screens/welcome_screen/welcome_screen.dart';
+import 'package:provider/provider.dart';
 
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+        apiKey: "AIzaSyDoZrO3W42wTDckMLt_bJkbIT1hz-uZmac",
+        appId: "1:431207410325:android:223be93cb56dc362c1499c",
+        messagingSenderId: "431207410325",
+        projectId: "medication-f765c")
+  );
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserAuthProvider(),)
+      ],
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,13 +29,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Visoion Learn',
+      title: 'Medication',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
 
         useMaterial3: true,
       ),
-      home: MainScreen(),
+      home: WelcomeScreen(),
     );
   }
 }

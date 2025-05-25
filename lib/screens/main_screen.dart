@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:medication/provider/auth_provider.dart';
+import 'package:medication/screens/chat_Screen/chat_screen.dart';
 import 'package:medication/screens/moodCompanion.dart';
 import 'package:medication/screens/speech_analysis_page.dart';
+import 'package:provider/provider.dart';
 
 import 'routineTracker.dart';
 
@@ -39,138 +43,168 @@ class _MainScreenState extends State<MainScreen> {
     // TODO: implement initState
     super.initState();
     TTSService();
+    Provider.of<UserAuthProvider>(context,listen: false).getUserDetails().then((onValue){
+      Provider.of<UserAuthProvider>(context,listen: false).createAchatUser();
+    });
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 35,vertical: 30),
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
+        child: Consumer<UserAuthProvider>(
+          builder: (BuildContext context, authProvider, Widget? child) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 35,vertical: 30),
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Welcome!",style: TextStyle(fontSize: 24,fontWeight:FontWeight.w600 ),),
-                  Text("MindCare",style: TextStyle(fontSize: 16,fontWeight:FontWeight.w600,color: Color.fromRGBO(0, 126, 154, 1), ),),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Welcome ${authProvider.userModel?.name??""}",style: TextStyle(fontSize: 24,fontWeight:FontWeight.w600 ),),
+                      Text("MindCare",style: TextStyle(fontSize: 16,fontWeight:FontWeight.w600,color: Color.fromRGBO(0, 126, 154, 1), ),),
+                    ],
+                  ),
+                  SizedBox(height: 100,),
+                  Flexible(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: GridView.count(
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        crossAxisCount: 2,
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              Get.to(Routinetracker());
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Color.fromRGBO(128, 169, 239, 1),
+                                      border: Border.all(width: 0.5,color: Colors.white)
+                                  ),
+                                  width: 96,
+                                  height: 93,
+                                  child: Image.asset("assets/images/pill 1.png",height: 36,width: 39,),
+                                ),
+                                SizedBox(height: 10,),
+                                Text("Routine Tracker",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
+                              ],
+                            ),
+                          ),
+
+                          GestureDetector(
+                            onTap: (){
+                              if(canVibrate){
+                              }
+                              //Get.to(Routinetracker());
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Color.fromRGBO(128, 169, 239, 1),
+                                      border: Border.all(width: 0.5,color: Colors.white)
+                                  ),
+                                  width: 96,
+                                  height: 93,
+                                  child: Image.asset("assets/images/console 1.png",height: 36,width: 39,),
+                                ),
+                                SizedBox(height: 10,),
+                                Text("Cognitive Monitor",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
+                              ],
+                            ),
+                          ),
+
+                          GestureDetector(
+                            onTap: (){
+                              if(canVibrate){
+                              }
+                              Get.to(SpeechAnalysisPage());
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Color.fromRGBO(128, 169, 239, 1),
+                                      border: Border.all(width: 0.5,color: Colors.white)
+                                  ),
+                                  width: 96,
+                                  height: 93,
+                                  child: Image.asset("assets/images/voice 1.png",height: 36,width: 39,),
+                                ),
+                                SizedBox(height: 10,),
+                                Text("Smart Assistant",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
+                              ],
+                            ),
+                          ),
+
+                          GestureDetector(
+                            onTap: (){
+                              Get.to(Moodcompanion());
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Color.fromRGBO(128, 169, 239, 1),
+                                      border: Border.all(width: 0.5,color: Colors.white)
+                                  ),
+                                  width: 96,
+                                  height: 93,
+                                  child: Image.asset("assets/images/yoga 2.png",height: 36,width: 39,),
+                                ),
+                                SizedBox(height: 10,),
+                                Text("Mood Companion",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
+                              ],
+                            ),
+                          ),
+                        ],
+
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 100,),
-              Flexible(
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: GridView.count(
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    crossAxisCount: 2,
-                    children: [
-                      GestureDetector(
-                        onTap: (){
-                          Get.to(Routinetracker());
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Color.fromRGBO(128, 169, 239, 1),
-                                  border: Border.all(width: 0.5,color: Colors.white)
-                              ),
-                              width: 96,
-                              height: 93,
-                              child: Image.asset("assets/images/pill 1.png",height: 36,width: 39,),
-                            ),
-                            SizedBox(height: 10,),
-                            Text("Routine Tracker",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
-                          ],
-                        ),
-                      ),
-
-                      GestureDetector(
-                        onTap: (){
-                          if(canVibrate){
-                          }
-                          //Get.to(Routinetracker());
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color.fromRGBO(128, 169, 239, 1),
-                                  border: Border.all(width: 0.5,color: Colors.white)
-                              ),
-                              width: 96,
-                              height: 93,
-                              child: Image.asset("assets/images/console 1.png",height: 36,width: 39,),
-                            ),
-                            SizedBox(height: 10,),
-                            Text("Cognitive Monitor",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
-                          ],
-                        ),
-                      ),
-
-                      GestureDetector(
-                        onTap: (){
-                          if(canVibrate){
-                          }
-                           Get.to(SpeechAnalysisPage());
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color.fromRGBO(128, 169, 239, 1),
-                                  border: Border.all(width: 0.5,color: Colors.white)
-                              ),
-                              width: 96,
-                              height: 93,
-                              child: Image.asset("assets/images/voice 1.png",height: 36,width: 39,),
-                            ),
-                            SizedBox(height: 10,),
-                            Text("Smart Assistant",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
-                          ],
-                        ),
-                      ),
-
-                      GestureDetector(
-                        onTap: (){
-                          Get.to(Moodcompanion());
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color.fromRGBO(128, 169, 239, 1),
-                                  border: Border.all(width: 0.5,color: Colors.white)
-                              ),
-                              width: 96,
-                              height: 93,
-                              child: Image.asset("assets/images/yoga 2.png",height: 36,width: 39,),
-                            ),
-                            SizedBox(height: 10,),
-                            Text("Mood Companion",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
-                          ],
-                        ),
-                      ),
-                    ],
-                
-                  ),
-                ),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(),));
+            },
+            child: Container(
+              padding: EdgeInsets.all(10),
+              width: 60,
+              height: 59,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(128, 169, 239, 1),
+                borderRadius: BorderRadius.circular(30)
+              ),
+              child: Icon(Icons.chat_outlined),
+            ),
+          ),
+          Text("Chat",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),),
+        ],
+      )
     );
   }
 }

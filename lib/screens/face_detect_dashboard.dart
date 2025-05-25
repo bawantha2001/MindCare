@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:medication/provider/auth_provider.dart';
 import 'package:medication/screens/excersice_screen.dart';
 import 'package:medication/screens/music_screen.dart';
 import 'package:medication/screens/yoga_meditaion_screen.dart';
+import 'package:provider/provider.dart';
 
 class FaceDetectDashboard extends StatefulWidget {
   final String faceType;
@@ -18,7 +20,9 @@ class _FaceDetectDashboardState extends State<FaceDetectDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Good Morning John! ${widget.faceType=="Happy"?"😄":widget.faceType=="Sad"?"😟":"😡"}",style: TextStyle(fontSize: 24,fontWeight:FontWeight.w600 ),),
+        title: Consumer<UserAuthProvider>(builder: (BuildContext context, userAuthProvider, Widget? child) {
+          return Text("Good Morning ${userAuthProvider.userModel?.name??""} ${widget.faceType=="Happy"?"😄":widget.faceType=="Sad"?"😟":"😡"}",style: TextStyle(fontSize: 20,fontWeight:FontWeight.w600 ),);
+        }),
         leading: GestureDetector(onTap:() {
           Navigator.pop(context);
         },

@@ -1,14 +1,149 @@
 import 'package:flutter/material.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class DoYogaMedScreen extends StatefulWidget {
   final String exName;
-  const DoYogaMedScreen({super.key,required this.exName});
+  bool? isyoga;
+  final String videoUrl;
+  DoYogaMedScreen({super.key,required this.exName,required this.isyoga,required this.videoUrl});
 
   @override
   State<DoYogaMedScreen> createState() => _DoExcersiceScreenState();
 }
 
 class _DoExcersiceScreenState extends State<DoYogaMedScreen> {
+  List<String>? selectedYogaOrmed;
+
+  List<String> yogaSeatedChair = [
+    "Sit tall in a sturdy chair.",
+    "Inhale – raise arms overhead.",
+    "Exhale – fold forward over legs.",
+    "Inhale – lift chest halfway up.",
+    "Exhale – fold again.",
+    "Inhale – raise arms back up.",
+    "Exhale – bring hands to heart."];
+
+  List<String> yogaChairWarrior2 = [
+    "Sit sideways on chair.",
+    "Front leg bent, back leg extended.",
+    "Arms out at shoulder height.",
+    "Look over front hand.",
+    "Hold, then switch sides.",
+  ];
+
+  List<String> yogaAlternateNostril = [
+    "Sit calmly.",
+    'Close right nostril, inhale left.',
+    "Close left, exhale right.",
+    "Inhale right, close, exhale left.",
+    "Repeat slowly",
+  ];
+
+  List<String> yogaStandingChair = [
+    "Stand behind chair, hands on backrest.",
+    "Inhale – arms up overhead.",
+    "Exhale – fold forward, hands to chair.",
+    'Inhale – lift chest, flat back.',
+    "Exhale – fold again.",
+    "Inhale – stand tall, arms up.",
+    "Exhale – hands to heart.",
+  ];
+
+  List<String> yogaBhastrikaPranayama = [
+    "Sit straight.",
+    "Inhale deeply through nose.",
+    "Forcefully exhale through nose.",
+    "Repeat fast, deep breaths (10–20 times).",
+    "Rest and breathe normally.",
+  ];
+
+  List<String> yogaYogaDown = [
+    "Stand facing a chair, hands on backrest.",
+    "Walk feet back, bend at hips.",
+    "Keep back and arms straight, head between arms.",
+    "Hold and breathe.",
+    "Slowly return to standing",
+  ];
+
+
+  List<String> mediGratitudeRef = [
+  "Sit comfortably and close your eyes.",
+  "Take a few deep breaths to relax.",
+  "Think of 3 things you are grateful for.",
+  "Focus on each one and feel thankful.",
+  "Silently say “Thank you” for each.",
+  "Stay with this feeling for a few minutes.",
+  "Gently open your eyes and smile.",
+  ];
+
+  List<String> mediJoyfulVisu = [
+  "Sit comfortably and close your eyes.",
+  "Breathe deeply and slowly.",
+  "Picture a happy moment.",
+  "Feel the joy clearly.",
+  "Stay in that feeling.",
+  "Open your eyes and smile.",
+
+  ];
+
+  List<String> mediDeepBreathing = [
+  "Sit comfortably and close your eyes.",
+  "Breathe in slowly through your nose.",
+  "Breathe out and think: “I am calm.”",
+  "Breathe in again.",
+  "Breathe out and think: “I am strong.”",
+  "Repeat for a few minutes.",
+  "Open your eyes and relax.",
+
+  ];
+
+  List<String> mediBodyRelaxing = [
+  "Sit or lie down and close your eyes.",
+  "Breathe deeply and slowly.",
+  'Focus on your feet—relax them.',
+  "Move up the body, relaxing each part.",
+  "Stay calm and breathe.",
+  "Open your eyes gently.",
+  ];
+
+  List<String> mediCoolingBreath = [
+  'it comfortably.',
+  "Inhale through rolled tongue or pursed lips.",
+  'Exhale through your nose.',
+  "Repeat slowly for a few minutes.",
+
+  ];
+
+  List<String> mediGuideRelaxiation = [
+  "Sit or lie down comfortably.",
+  "Play a guided audio or app.",
+  "Close your eyes and listen.",
+  "Follow the voice and relax your body.",
+  "Breathe slowly and stay calm.",
+
+  ];
+
+  YoutubePlayerController? _controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      if(widget.isyoga!){
+        widget.exName == "Seated Chair Yoga Sun Salutations"?selectedYogaOrmed = yogaSeatedChair:widget.exName == "Alternate Nostril Breathing"?selectedYogaOrmed = yogaAlternateNostril:widget.exName == "Bhastrika Pranayama"?selectedYogaOrmed = yogaBhastrikaPranayama:widget.exName == "Chair Warrior II"?selectedYogaOrmed = yogaChairWarrior2:widget.exName == "Standing Chair Yoga Sun Salutations"?selectedYogaOrmed = yogaStandingChair:selectedYogaOrmed = yogaYogaDown;
+      }
+    else{
+      widget.exName == "Gratitude Reflection Meditation"?selectedYogaOrmed = mediGratitudeRef:widget.exName == "Deep Breathing with Affirmations"?selectedYogaOrmed = mediDeepBreathing:widget.exName == "Cooling Breath"?selectedYogaOrmed = mediCoolingBreath:widget.exName == "Joyful Visualization"?selectedYogaOrmed = mediJoyfulVisu:widget.exName == "Body Relaxation Meditation"?selectedYogaOrmed = mediBodyRelaxing:selectedYogaOrmed = mediGuideRelaxiation;
+    }
+
+    _controller = YoutubePlayerController.fromVideoId(
+      videoId: YoutubePlayerController.convertUrlToId(widget.videoUrl)??"",
+      autoPlay: false,
+      params: const YoutubePlayerParams(showFullscreenButton: true),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,111 +156,49 @@ class _DoExcersiceScreenState extends State<DoYogaMedScreen> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.only(left: 15,top: 15,right: 15,bottom: 5),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child:Column(
           children: [
-            SizedBox(height: 10,),
-            Flexible(
-              child: Container(
-                height: 195,
-                width: 346,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue,width: 2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.play_circle,size: 50,color: Color.fromRGBO(64, 124, 226, 1),),
-                    SizedBox(height: 5,),
-                    Text("Play the Video",style: TextStyle(fontWeight: FontWeight.w800),)
-                  ],
-                ),
-              ),
+            YoutubePlayer(
+              controller: _controller!,
+              aspectRatio: 16 / 9,
             ),
 
-            SizedBox(height: 30,),
+            SizedBox(height: 15,),
 
             Flexible(
-              child: Row(
-                children: [
-                  Flexible(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      height: 195,
-                      width: 165,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                              width: 1,
-                              color: Colors.blue
-                          )
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(child: Image.asset("assets/images/yoga 1.png",)),
-                          SizedBox(height: 10,),
-                          Flexible(child: Text("Step 1",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),)),
-                        ],
-                      ),
-                    ),
+              child: GridView.builder(
+                itemCount: selectedYogaOrmed?.length??0,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10
                   ),
-                  SizedBox(width: 8,),
-                  Flexible(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      height: 195,
-                      width: 165,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                              width: 1,
-                              color: Colors.blue
-                          )
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(child: Image.asset("assets/images/stretching 1.png",)),
-                          SizedBox(height: 10,),
-                          Flexible(child: Text("Step 2",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),)),
-                        ],
-                      ),
+                  itemBuilder: (context, index) {
+                  return Container(
+                    padding: EdgeInsets.all(10),
+                    width: 165,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                            width: 1,
+                            color: Colors.blue
+                        )
                     ),
-                  ),
-                ],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(child: Image.asset("assets/images/yoga 1.png",)),
+                        SizedBox(height: 10,),
+                        Flexible(child: Text("Step ${index+1}: ${selectedYogaOrmed?.elementAt(index)}"??"",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),)),
+                      ],
+                    ),
+                  );
+                  },
               ),
-            ),
-
-            SizedBox(height: 8,),
-
-            Flexible(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                height: 195,
-                width: 165,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(
-                        width: 1,
-                        color: Colors.blue
-                    )
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(child: Image.asset("assets/images/img2.png",)),
-                    SizedBox(height: 10,),
-                    Flexible(child: Text("Step 3",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),)),
-                  ],
-                ),
-              ),
-            ),
-
+            )
           ],
         ),
       ),

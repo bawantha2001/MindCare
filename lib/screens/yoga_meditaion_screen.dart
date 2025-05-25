@@ -58,7 +58,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
                             Spacer(),
                             ElevatedButton(
                               onPressed: (){
-                                Get.to(DoYogaMedScreen(exName: widget.faceType=='Happy'?"Seated Chair Yoga Sun Salutations":widget.faceType=='Sad'?"Alternate Nostril Breathing":"Bhastrika Pranayama"));
+                                Get.to(DoYogaMedScreen(exName: widget.faceType=='Happy'?"Seated Chair Yoga Sun Salutations":widget.faceType=='Sad'?"Alternate Nostril Breathing":"Bhastrika Pranayama",isyoga: true,videoUrl: widget.faceType=='Happy'?"https://www.youtube.com/watch?v=kpmxmkyyzCI":widget.faceType=='Sad'?"https://www.youtube.com/watch?v=3qnogqUk6-k":"https://www.youtube.com/watch?v=BWxREnF5uQE",));
                               },
                               child: Text("Start"),
                               style: ElevatedButton.styleFrom(
@@ -83,7 +83,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
                             Spacer(),
                             ElevatedButton(
                               onPressed: (){
-                                Get.to(DoYogaMedScreen(exName: widget.faceType=='Happy'?"Chair Warrior II":widget.faceType=='Sad'?"Standing Chair Yoga Sun Salutations":"Chair Yoga Down Dog"));
+                                Get.to(DoYogaMedScreen(exName: widget.faceType=='Happy'?"Chair Warrior II":widget.faceType=='Sad'?"Standing Chair Yoga Sun Salutations":"Chair Yoga Down Dog",isyoga: true,videoUrl: widget.faceType=='Happy'?"https://www.youtube.com/watch?v=vT5MUMmbT68":widget.faceType=='Sad'?"https://www.youtube.com/watch?v=TGj3Ln7io6c":"https://www.youtube.com/watch?v=BJ1_3OhYNeQ",));
                               },
                               child: Text("Start"),
                               style: ElevatedButton.styleFrom(
@@ -120,7 +120,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
                             Spacer(),
                             ElevatedButton(
                               onPressed: (){
-                                Get.to(DoYogaMedScreen(exName: widget.faceType=='Happy'?"Gratitude Reflection Meditation":widget.faceType=='Sad'?"Deep Breathing with Affirmations":"Cooling Breath"));
+                                Get.to(DoYogaMedScreen(exName: widget.faceType=='Happy'?"Gratitude Reflection Meditation":widget.faceType=='Sad'?"Deep Breathing with Affirmations":"Cooling Breath",isyoga: false,videoUrl: widget.faceType=='Happy'?"https://www.youtube.com/watch?v=9xTG_kWupO0":widget.faceType=='Sad'?"https://www.youtube.com/watch?v=DbDoBzGY3vo":"https://www.youtube.com/watch?v=CZKk4A3tq1U",));
                               },
                               child: Text("Start"),
                               style: ElevatedButton.styleFrom(
@@ -145,7 +145,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
                             Spacer(),
                             ElevatedButton(
                               onPressed: (){
-                                Get.to(DoYogaMedScreen(exName: widget.faceType=='Happy'?"Joyful Visualization":widget.faceType=='Sad'?"Body Relaxation Meditation":"Guided Relaxation"));
+                                Get.to(DoYogaMedScreen(exName: widget.faceType=='Happy'?"Joyful Visualization":widget.faceType=='Sad'?"Body Relaxation Meditation":"Guided Relaxation",isyoga: false,videoUrl: widget.faceType=='Happy'?"https://www.youtube.com/watch?v=hxCG_c4XYUs":widget.faceType=='Sad'?"https://www.youtube.com/watch?v=JuIeF8CMU5k":"https://www.youtube.com/watch?v=vj0JDwQLof4"));
                               },
                               child: Text("Start"),
                               style: ElevatedButton.styleFrom(
