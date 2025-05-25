@@ -70,63 +70,107 @@ class ResultPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Fluency Metrics"),
+        title: const Text("Assessment Result",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600),),
       ),
-      body: Padding(
+      body: Container(
         padding: const EdgeInsets.all(16.0),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Color.fromRGBO(242, 242, 246, 1),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Gray box at the top showing the final overall category.
             Container(
               height: 100,
               width: double.infinity,
-              color: Colors.grey[200],
+              decoration: BoxDecoration(
+                color: Colors.pink.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(15)
+              ),
+
               child: Center(
                 child: Text(
-                  "Overall Category: $finalCategory",
+                  "${finalCategory.toUpperCase()}",
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 35,
                     fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(136, 88, 4, 1)
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 30),
             // Custom bar graph built with standard widgets.
-            SizedBox(
-              height: graphHeight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.end,
+            Text("Speech Analysis Summary",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20,),textAlign: TextAlign.left,),
+            SizedBox(height: 20,),
+            Text("Filler Words Detected: ",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,),textAlign: TextAlign.left,),
+            SizedBox(height: 20,),
+            Text("Repeated Words Unth: ",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,),textAlign: TextAlign.left,),
+            // SizedBox(
+            //   height: graphHeight,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     crossAxisAlignment: CrossAxisAlignment.end,
+            //     children: [
+            //       _buildBar("Fluency", testValues[0], maxValue, graphHeight, Colors.blue),
+            //       _buildBar("Verbal", testValues[1], maxValue, graphHeight, Colors.green),
+            //       _buildBar("Story", testValues[2], maxValue, graphHeight, Colors.orange),
+            //     ],
+            //   ),
+            // ),
+
+
+            Spacer(),
+
+            Container(
+              padding: EdgeInsets.all(15),
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildBar("Fluency", testValues[0], maxValue, graphHeight, Colors.blue),
-                  _buildBar("Verbal", testValues[1], maxValue, graphHeight, Colors.green),
-                  _buildBar("Story", testValues[2], maxValue, graphHeight, Colors.orange),
+                  Text("💡 Hint:",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),),
+                  Text("Try's speak slowly and describe daily activities. This may improve fluency and clarity.",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16))
                 ],
               ),
             ),
-            const SizedBox(height: 16),
-            // "Analyze Again" button.
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to a fresh SpeechAnalysisPage by removing all previous routes.
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SpeechAnalysisPage(),
-                    ),
-                        (route) => false,
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  textStyle: const TextStyle(fontSize: 18),
-                ),
-                child: const Text("Analyze Again"),
-              ),
-            ),
+
+            const SizedBox(height: 25),
+            Row(
+                children: [
+                  Flexible(child:
+                  GestureDetector(onTap: (){
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },child: createButton(isShowboarder: true, buttonText: "Try Again"))),
+                  SizedBox(width: 5,),
+                  Flexible(child: createButton(isShowboarder: true, buttonText: "Save Report"))
+            ]),
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       // Navigate to a fresh SpeechAnalysisPage by removing all previous routes.
+            //       Navigator.pushAndRemoveUntil(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => const SpeechAnalysisPage(),
+            //         ),
+            //             (route) => false,
+            //       );
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       padding: const EdgeInsets.symmetric(vertical: 16),
+            //       textStyle: const TextStyle(fontSize: 18),
+            //     ),
+            //     child: const Text("Analyze Again"),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -154,6 +198,19 @@ class ResultPage extends StatelessWidget {
         const SizedBox(height: 8),
         Text(label),
       ],
+    );
+  }
+
+  Widget createButton({required bool isShowboarder, required String buttonText, bool? isLoading}){
+    return Container(
+      width: 300,
+      height: 56,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: isShowboarder?Color.fromRGBO(64, 124, 226, 1):Colors.transparent,
+          border: Border.all(width: 1,color: Color.fromRGBO(64, 124, 226, 1))
+      ),
+      child: Center(child:(isLoading??false)?CircularProgressIndicator(color: Colors.white,):Text(buttonText??"",style: TextStyle(fontSize: 16,color: isShowboarder?Colors.white:Color.fromRGBO(64, 124, 226, 1),fontWeight: FontWeight.w500),)),
     );
   }
 }

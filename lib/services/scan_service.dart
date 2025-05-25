@@ -136,7 +136,7 @@ class ScanService extends GetxController{
       );
 
       if(detector != null){
-        if(detector[0]['confidence']>=0.87 && detector[0]['confidence']<0.9999064207077026){
+        if(detector[0]['confidence']>=0.82 && detector[0]['confidence']<0.9999064207077026){
           String label = detector[0]['label'];
           detectedObject.value = label.replaceAll(RegExp(r'[0-9\s]'), '');
           update();
