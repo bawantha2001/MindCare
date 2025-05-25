@@ -17,6 +17,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(242, 242, 246, 1),
         title: Text("All Yoga and Meditations"),
         leading: GestureDetector(onTap:() {
           Navigator.pop(context);
@@ -27,7 +28,7 @@ class _MusicScreenState extends State<YogaMeditaionScreen> {
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.all(8.0),
-          color: Colors.white,
+          color: Color.fromRGBO(242, 242, 246, 1),
           width: double.infinity,
           height: double.infinity,
           child: ContainedTabBarView(
