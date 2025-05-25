@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medication/provider/auth_provider.dart';
 import 'package:medication/provider/remind_provider.dart';
+import 'package:medication/provider/speach_recognision_provider.dart';
 import 'package:medication/screens/wrapper_screen/wrapper_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,8 @@ Future<void> main() async {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserAuthProvider(),),
-        ChangeNotifierProvider(create: (context) => RemindProvider(),)
+        ChangeNotifierProvider(create: (context) => RemindProvider(),),
+        ChangeNotifierProvider(create: (context) => SpeachRecognisionProvider(),)
       ],
   child: const MyApp()));
 }

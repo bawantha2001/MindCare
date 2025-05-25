@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:medication/provider/speach_recognision_provider.dart';
+import 'package:provider/provider.dart';
 import 'speech_analysis_page.dart';
 
 class ResultPage extends StatelessWidget {
@@ -149,7 +151,11 @@ class ResultPage extends StatelessWidget {
                     Navigator.pop(context);
                   },child: createButton(isShowboarder: true, buttonText: "Try Again"))),
                   SizedBox(width: 5,),
-                  Flexible(child: createButton(isShowboarder: true, buttonText: "Save Report"))
+                  Flexible(child: GestureDetector(
+                    onTap: (){
+                      Provider.of<SpeachRecognisionProvider>(context,listen: false).saveResult(DateTime.now(), finalCategory);
+                    },
+                      child: createButton(isShowboarder: true, buttonText: "Save Report")))
             ]),
             // SizedBox(
             //   width: double.infinity,
