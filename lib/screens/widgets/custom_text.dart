@@ -5,11 +5,14 @@ class CustomText extends StatefulWidget {
   final String hintText;
   final IconData prefixIcon;
   final bool isPassword;
+  final bool isEnable;
 
    CustomText({super.key,required this.textController,
      required this.hintText,
      required this.prefixIcon,
-     this.isPassword = false,});
+     this.isPassword = false,
+     this.isEnable = true
+   });
 
   @override
   State<CustomText> createState() => _CustomTextState();
@@ -29,6 +32,7 @@ class _CustomTextState extends State<CustomText> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      enabled: widget.isEnable,
       controller: widget.textController,
       obscureText: isObsecure && !isPasswordShow,
       decoration: InputDecoration(

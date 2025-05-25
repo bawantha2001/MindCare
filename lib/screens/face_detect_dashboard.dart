@@ -20,6 +20,7 @@ class _FaceDetectDashboardState extends State<FaceDetectDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(242, 242, 246, 1),
         title: Consumer<UserAuthProvider>(builder: (BuildContext context, userAuthProvider, Widget? child) {
           return Text("Good Morning ${userAuthProvider.userModel?.name??""} ${widget.faceType=="Happy"?"😄":widget.faceType=="Sad"?"😟":"😡"}",style: TextStyle(fontSize: 20,fontWeight:FontWeight.w600 ),);
         }),
@@ -35,7 +36,7 @@ class _FaceDetectDashboardState extends State<FaceDetectDashboard> {
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color.fromRGBO(242, 242, 246, 1),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

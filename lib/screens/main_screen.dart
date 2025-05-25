@@ -6,7 +6,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:medication/provider/auth_provider.dart';
 import 'package:medication/screens/chat_Screen/chat_screen.dart';
 import 'package:medication/screens/moodCompanion.dart';
+import 'package:medication/screens/rooting_dashboard_screen/rooting_dasshboard_screen.dart';
 import 'package:medication/screens/speech_analysis_page.dart';
+import 'package:medication/screens/welcome_screen/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'routineTracker.dart';
@@ -60,16 +62,47 @@ class _MainScreenState extends State<MainScreen> {
               height: double.infinity,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color.fromRGBO(242, 242, 246, 1),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Text("Welcome ${authProvider.userModel?.name??""}",style: TextStyle(fontSize: 24,fontWeight:FontWeight.w600 ),),
-                      Text("MindCare",style: TextStyle(fontSize: 16,fontWeight:FontWeight.w600,color: Color.fromRGBO(0, 126, 154, 1), ),),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Welcome ${authProvider.userModel?.name??""}",style: TextStyle(fontSize: 24,fontWeight:FontWeight.w600 ),),
+                          Text("MindCare",style: TextStyle(fontSize: 16,fontWeight:FontWeight.w600,color: Color.fromRGBO(0, 126, 154, 1), ),),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: (){
+                          showDialog(context: context, builder: (context) {
+                            return AlertDialog(
+                              title: Text("Log Out"),
+                              content: Text("Are you sure you want to Log Out?"),
+                              actions: [
+                                TextButton(
+                                  child: const Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('Yes LogOut'),
+                                  onPressed: () {
+                                    Provider.of<UserAuthProvider>(context,listen: false).signOut().then((onValue){
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => WelcomeScreen(),), (Route<dynamic> route) => false,);
+                                    });
+                                  },
+                                ),
+                              ],
+                            );
+                          },);
+                        },
+                          child: Icon(Icons.login_rounded,size: 30,color: Colors.redAccent,))
                     ],
                   ),
                   SizedBox(height: 100,),
@@ -84,7 +117,7 @@ class _MainScreenState extends State<MainScreen> {
                         children: [
                           GestureDetector(
                             onTap: (){
-                              Get.to(Routinetracker());
+                              Get.to(RootingDasshboardScreen());
                             },
                             child: Column(
                               children: [

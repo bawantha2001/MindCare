@@ -148,6 +148,7 @@ class _DoExcersiceScreenState extends State<DoYogaMedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(242, 242, 246, 1),
         title: Text("${widget.exName}"),
         leading: GestureDetector(onTap:() {
           Navigator.pop(context);
@@ -159,6 +160,7 @@ class _DoExcersiceScreenState extends State<DoYogaMedScreen> {
         padding: EdgeInsets.only(left: 15,top: 15,right: 15,bottom: 5),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
+        color: Color.fromRGBO(242, 242, 246, 1),
         child:Column(
           children: [
             YoutubePlayer(
@@ -169,31 +171,29 @@ class _DoExcersiceScreenState extends State<DoYogaMedScreen> {
             SizedBox(height: 15,),
 
             Flexible(
-              child: GridView.builder(
+              child: ListView.builder(
                 itemCount: selectedYogaOrmed?.length??0,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10
-                  ),
                   itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    width: 165,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                            width: 1,
-                            color: Colors.blue
-                        )
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(child: Image.asset("assets/images/yoga 1.png",)),
-                        SizedBox(height: 10,),
-                        Flexible(child: Text("Step ${index+1}: ${selectedYogaOrmed?.elementAt(index)}"??"",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),)),
-                      ],
+                  return Padding(
+                    padding: EdgeInsets.only(top: 5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                              width: 1,
+                              color: Colors.blue
+                          )
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Flexible(child: Image.asset("assets/images/yoga 1.png",scale: 4,)),
+                          SizedBox(width: 10,),
+                          Text("Step ${index+1}: ${selectedYogaOrmed?.elementAt(index)}"??"",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 12,),),
+                        ],
+                      ),
                     ),
                   );
                   },

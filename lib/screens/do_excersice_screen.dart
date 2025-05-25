@@ -77,6 +77,7 @@ class _DoExcersiceScreenState extends State<DoExcersiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(242, 242, 246, 1),
         title: Text("${widget.exName}"),
         leading: GestureDetector(onTap:() {
           Navigator.pop(context);
@@ -88,6 +89,7 @@ class _DoExcersiceScreenState extends State<DoExcersiceScreen> {
         padding: EdgeInsets.only(left: 15,top: 15,right: 15,bottom: 2),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
+        color: Color.fromRGBO(242, 242, 246, 1),
         child:Column(
           children: [
             YoutubePlayer(

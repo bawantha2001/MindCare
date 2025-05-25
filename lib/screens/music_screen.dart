@@ -14,6 +14,7 @@ class _MusicScreenState extends State<MusicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(242, 242, 246, 1),
         title: Text("All Songs"),
         leading: GestureDetector(onTap:() {
           Navigator.pop(context);
@@ -25,7 +26,7 @@ class _MusicScreenState extends State<MusicScreen> {
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Colors.white
+              color: Color.fromRGBO(242, 242, 246, 1),
           ),
           child: Padding(
             padding: const EdgeInsets.all(12.0),

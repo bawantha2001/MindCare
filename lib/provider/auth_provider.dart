@@ -113,4 +113,22 @@ class UserAuthProvider with ChangeNotifier{
     }
   }
 
+  Future<bool> isLogedIn()async{
+    User? firebaseUser = FirebaseAuth.instance.currentUser;
+    if(firebaseUser !=null){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  Future<void> signOut()async{
+    try{
+      await FirebaseAuth.instance.signOut();
+    }catch(e){
+      print(e);
+    }
+  }
+
 }
