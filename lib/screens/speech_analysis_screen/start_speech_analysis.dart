@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:medication/provider/speach_recognision_provider.dart';
 import 'package:medication/screens/speech_analysis_screen/Instruction_screen.dart';
+import 'package:medication/screens/speech_analysis_screen/previous_results_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/remind_provider.dart';
 
 class StartSpeechAnalysis extends StatefulWidget {
   const StartSpeechAnalysis({super.key});
@@ -11,6 +16,13 @@ class StartSpeechAnalysis extends StatefulWidget {
 }
 
 class _StartSpeechAnalysisState extends State<StartSpeechAnalysis> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<SpeachRecognisionProvider>(context,listen: false).fetchResult();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +42,11 @@ class _StartSpeechAnalysisState extends State<StartSpeechAnalysis> {
                 Get.to(InstructionScreen());
               },child: createButton(isShowboarder: true, buttonText: "Start New Assessment")),
               SizedBox(height: 10,),
-              createButton(isShowboarder: true, buttonText: "View Previous Results"),
+              GestureDetector(
+                onTap: (){
+                  Get.to(PreviousResultsScreen());
+                },
+                  child: createButton(isShowboarder: true, buttonText: "View Previous Results")),
             ],
           ),
         ),
