@@ -121,9 +121,11 @@ class _SpeechAnalysisPageState extends State<SpeechAnalysisPage> {
       });
 
       if (path == null) {
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("File is not uploaded. Check your connection or try again."),
+            backgroundColor: Colors.redAccent,
           ),
         );
         return;
@@ -184,21 +186,25 @@ class _SpeechAnalysisPageState extends State<SpeechAnalysisPage> {
         // Save only the stage
         _serverResponses.add({'predictedStage': stage});
       } else {
+        Navigator.pop(context);
         _serverResponses.add({
           'error': 'Server error: ${streamed.statusCode}',
         });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Server error—please try again."),
+            backgroundColor: Colors.redAccent,
           ),
         );
       }
     } catch (e) {
+      Navigator.of(context).pop();
       debugPrint("Upload error: $e");
       _serverResponses.add({'error': e.toString()});
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Upload failed—check your connection."),
+          content: Text("Upload failed, check your connection and try again"),
+          backgroundColor: Colors.redAccent,
         ),
       );
     } finally {
