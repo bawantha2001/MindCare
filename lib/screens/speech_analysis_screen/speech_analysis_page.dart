@@ -235,93 +235,114 @@ class _SpeechAnalysisPageState extends State<SpeechAnalysisPage> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Speech Analysis"),
-        leading: GestureDetector(onTap:() {
-          Navigator.pop(context);
-        },
-            child: Icon(Icons.arrow_back_ios_rounded,color: Colors.blue,)
-        ),
-      ),
-      body: Column(
-        children: [
-          // Chat message list shows only questions and user recordings.
-          Expanded(
-            child: ListView.builder(
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                final message = _messages[index];
-                bool isUser = message['isUser'];
-                bool isAudio = message['isAudio'];
-                String text = message['text'];
-                return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  alignment: isUser ? Alignment.centerLeft : Alignment.centerRight,
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    constraints:
-                    BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
-                    decoration: BoxDecoration(
-                      color: isUser ? Colors.grey[200] : Colors.blue[200],
-                      borderRadius: BorderRadius.circular(12),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // --- 1) Top bar with back arrow & progress ----
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: const Icon(Icons.arrow_back_ios_rounded, size: 24),
+                  ),
+                  const Spacer(),
+                  Text(
+                    'Question $_questionCount of $_maxQuestions',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
-                    child: isAudio
-                        ? Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.audiotrack),
-                        const SizedBox(width: 8),
-                        Text(text),
-                      ],
-                    )
-                        : Text(text),
                   ),
-                );
+                  const Spacer(),
+                  // keep same space so text stays centered
+                  const SizedBox(width: 24),
+                ],
+              ),
+            ),
+
+            // --- 2) Question text ----
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              child: Text(
+                _currentQuestion,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            // push mic button down
+            const Spacer(),
+
+            // --- 3) Big circular mic button ----
+            GestureDetector(
+              onTap: () {
+                if (_isRecording) {
+                  _stopRecordingAndSave();
+                } else {
+                  _startRecording();
+                }
               },
-            ),
-          ),
-          // If finished, show the Next button; otherwise, show recording controls.
-          _finished
-              ? Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: _goToResultPage,
-              child: const Text("Next"),
-            ),
-          )
-              : Container(
-            color: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(_isRecording ? Icons.stop : Icons.mic),
-                  color: _isRecording ? Colors.red : Colors.blue,
-                  onPressed: () {
-                    if (_isRecording) {
-                      _stopRecordingAndSave();
-                    } else {
-                      _startRecording();
-                    }
-                  },
+              child: Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: _isRecording ? Colors.redAccent : Colors.blue,
+                  shape: BoxShape.circle,
                 ),
-                const SizedBox(width: 8),
-                Text(_isRecording ? "Recording..." : "Tap mic to record"),
-                const Spacer(),
-                if (_isRecording)
-                  ElevatedButton(
-                    onPressed: _stopRecordingAndSave,
-                    child: const Text("Save"),
-                  ),
-              ],
+                child: Icon(
+                  _isRecording ? Icons.stop : Icons.mic,
+                  size: 48,
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ),
-        ],
+
+            const SizedBox(height: 16),
+
+            // --- 4) Transcript preview ----
+            if (_messages.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Text(
+                  // show the last user-audio message’s “text”
+                  _messages.last['isAudio'] == true
+                      ? _messages.last['text']
+                      : '',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
+              ),
+
+            const Spacer(),
+
+            // --- 5) Next button pinned at bottom ----
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: !_finished
+                      ? null
+                      : () {
+                    _goToResultPage();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text('Next'),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
+  }
